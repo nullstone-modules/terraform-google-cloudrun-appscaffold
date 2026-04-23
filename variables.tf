@@ -29,7 +29,7 @@ variable "repo_labels" {
   default     = {}
 }
 
-variable "ns_agent_service_account_email" {
-  type        = string
-  description = "Email of the Nullstone agent service account. Granted iam.serviceAccountTokenCreator on each scaffolding SA so the agent can impersonate them."
+variable "op_impersonater_emails" {
+  type        = list(string)
+  description = "Emails of service accounts allowed to impersonate the scaffolding SAs (image pusher, deployer, log reader). Each is granted iam.serviceAccountTokenCreator on every scaffolding SA."
 }

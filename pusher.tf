@@ -24,8 +24,8 @@ resource "google_artifact_registry_repository_iam_member" "image_pusher_reader" 
   member     = "serviceAccount:${google_service_account.image_pusher.email}"
 }
 
-resource "google_service_account_iam_binding" "image_pusher_nullstone_agent" {
+resource "google_service_account_iam_binding" "image_pusher_impersonators" {
   service_account_id = google_service_account.image_pusher.id
   role               = "roles/iam.serviceAccountTokenCreator"
-  members            = ["serviceAccount:${var.ns_agent_service_account_email}"]
+  members            = [for email in var.op_impersonater_emails : "serviceAccount:${email}"]
 }

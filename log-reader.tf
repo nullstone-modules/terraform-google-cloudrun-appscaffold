@@ -14,8 +14,8 @@ resource "google_project_iam_member" "log_reader_logs_access" {
   member  = "serviceAccount:${google_service_account.log_reader.email}"
 }
 
-resource "google_service_account_iam_binding" "log_reader_nullstone_agent" {
+resource "google_service_account_iam_binding" "log_reader_impersonators" {
   service_account_id = google_service_account.log_reader.id
   role               = "roles/iam.serviceAccountTokenCreator"
-  members            = ["serviceAccount:${var.ns_agent_service_account_email}"]
+  members            = [for email in var.op_impersonater_emails : "serviceAccount:${email}"]
 }
