@@ -1,5 +1,10 @@
+locals {
+  max_app_sa_name_len = 30 - length("-${var.resource_suffix}")
+  app_sa_name         = "${substr(var.block_ref, 0, local.max_app_sa_name_len)}-${var.resource_suffix}"
+}
+
 resource "google_service_account" "app" {
-  account_id   = local.resource_name
+  account_id   = local.app_sa_name
   display_name = "Service Account for Nullstone App ${var.app_name}"
 }
 
